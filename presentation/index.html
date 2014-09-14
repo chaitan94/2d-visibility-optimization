@@ -9,7 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="css/theme/night.css" id="theme">
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 		<script>
 			if( window.location.search.match( /print-pdf/gi ) ) {
@@ -55,7 +55,83 @@
 							<li>Automated warcrafts</li>
 							<li>Security Devices</li>
 							<li>Cameras / Videography</li>
+							<li>Placement of sensors</li>
+							<li>Solar Panels</li>
+							<li>Many more..</li>
 						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>2D Visibility</h4>
+						<h2>Area Calculation</h2>
+						<p>Wait, how do find the visible area from <br>a specific point in the first place?</p>
+					</section>
+					<section>
+						<h4>2D Visibility-Area Calculation</h4>
+						<h2>Steps</h2>
+						<center>
+						<table>
+							<tr>
+								<td><p>TODO</p></td>
+								<td>
+									<ol>
+										<li class="fragment roll-in">TODO</li>
+										<li class="fragment roll-in">TODO</li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+						</center>
+					</section>
+					<section>
+						<h4>2D Visibility</h4>
+						<h2>Area Calculation</h2>
+						<iframe src="demos/demo0.html" width="750" height="450"></iframe>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>2D Visibility</h4>
+						<h2>Optimization</h2>
+						<p>We found the area, but how do me <b>maximize</b> it?</p>
+					</section>
+					<section>
+						<h4>2D Visibility Optimization</h4>
+						<h2>Steepest Ascent</h2>
+						<ol>
+							<li class="fragment roll-in">Start at a point</li>
+							<li class="fragment roll-in">Find area visible from neigbouring points</li>
+							<li class="fragment roll-in">Move towards the maximum if it is more than current area</li>
+						</ol>
+					</section>
+					<section>
+						<h4>2D Visibility Optimization</h4>
+						<h2>Steepest Ascent</h2>
+						<iframe src="demos/demo1.html" width="750" height="450"></iframe>
+					</section>
+					<section>
+						<h4>2D Visibility Optimization</h4>
+						<h2>Simulated Annealing</h2>
+						<ol>
+							<li class="fragment roll-in">Start at a point</li>
+							<li class="fragment roll-in">Find area visible from neigbouring points</li>
+							<li class="fragment roll-in">Move towards the maximum if it is more than current area</li>
+							<li class="fragment roll-in">If not still move, but with decreasing probabilities each time</li>
+						</ol>
+					</section>
+					<section>
+						<h4>2D Visibility - Optimization</h4>
+						<h2>Simulated Annealing</h2>
+						<iframe src="demos/demo2.html" width="750" height="450"></iframe>
+					</section>
+				</section>
+
+				<section data-background="img/thankyoubg.jpg" data-background-transition="slide">
+					<h1 style="color:#e3e3e3;">Thank You</h1>
+					<p style="color:#acacac;">Sources, citations and references,<br>are all listed at our GitHub repo:<br><a href="https://github.com/chaitan94/2d-visibility-optimization">https://github.com/chaitan94/2d-visibility-optimization</a></p>
 				</section>
 
 			</div>
@@ -74,7 +150,6 @@
 				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
 				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
 				// Parallax scrolling
-				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
 				// parallaxBackgroundSize: '2100px 900px',
 				// Optional libraries used to extend on reveal.js
 				dependencies: [

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<!-- saved from url=(0110)https://36ae75de55f353a626a926511dbc43b1ff3bdf48.googledrive.com/host/0B7gpUuZnCjpdRXBxeUtfdHpyNFU/draft2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<style>
+	body{
+		margin:0;
+		background: #eee;
+	}
+	#canvas{
+		width:640px;
+		height:360px;
+		background: #222;
+	}
+	</style>
+</head>
+	<body>
+		<canvas id="canvas" width="640" height="360"></canvas>
+		<div id="msg">Area: 54924.11521522767<br>Temp: 0.021185824653158988</div>
+	
+
+<script>
+
+// Find intersection of RAY & SEGMENT
+function getIntersection(ray,segment){
+
+	// RAY in parametric: Point + Delta*T1
+	var r_px = ray.a.x;
+	var r_py = ray.a.y;
+	var r_dx = ray.b.x-ray.a.x;
+	var r_dy = ray.b.y-ray.a.y;
+
+	// SEGMENT in parametric: Point + Delta*T2
+	var s_px = segment.a.x;
+	var s_py = segment.a.y;
+	var s_dx = segment.b.x-segment.a.x;
+	var s_dy = segment.b.y-segment.a.y;
+
+	// Are they parallel? If so, no intersect
+	var r_mag = Math.sqrt(r_dx*r_dx+r_dy*r_dy);
+	var s_mag = Math.sqrt(s_dx*s_dx+s_dy*s_dy);
+	if(r_dx/r_mag==s_dx/s_mag && r_dy/r_mag==s_dy/s_mag){
+		// Unit vectors are the same.
+		return null;
+	}
+
+	// SOLVE FOR T1 & T2
+	// r_px+r_dx*T1 = s_px+s_dx*T2 && r_py+r_dy*T1 = s_py+s_dy*T2
+	// ==> T1 = (s_px+s_dx*T2-r_px)/r_dx = (s_py+s_dy*T2-r_py)/r_dy
+	// ==> s_px*r_dy + s_dx*T2*r_dy - r_px*r_dy = s_py*r_dx + s_dy*T2*r_dx - r_py*r_dx
+	// ==> T2 = (r_dx*(s_py-r_py) + r_dy*(r_px-s_px))/(s_dx*r_dy - s_dy*r_dx)
+	var T2 = (r_dx*(s_py-r_py) + r_dy*(r_px-s_px))/(s_dx*r_dy - s_dy*r_dx);
+	var T1 = (s_px+s_dx*T2-r_px)/r_dx;
+
+	// Must be within parametic whatevers for RAY/SEGMENT
+	if(T1<0) return null;
+	if(T2<0 || T2>1) return null;
+
+	// Return the POINT OF INTERSECTION
+	return {
+		x: r_px+r_dx*T1,
+		y: r_py+r_dy*T1,
+		param: T1
+	};
+
+}
+
+function distance(p1, p2) {
+	var dx = p1.x-p2.x;
+	var dy = p1.y-p2.y;
+	return Math.sqrt(dx*dx+dy*dy);
+}
+
+function areaOfTriangle(p1, p2, p3) {
+	var a = distance(p1, p2);
+	var b = distance(p2, p3);
+	var c = distance(p3, p1);
+	var s = (a+b+c)/2;
+	return Math.sqrt(s*(s-a)*(s-b)*(s-c));
+}
+
+function getIntersects(Source) {
+	// Get all unique points
+	var points = (function(segments){
+		var a = [];
+		segments.forEach(function(seg){
+			a.push(seg.a,seg.b);
+		});
+		return a;
+	})(segments);
+	var uniquePoints = (function(points){
+		var set = {};
+		return points.filter(function(p){
+			var key = p.x+","+p.y;
+			if(key in set){
+				return false;
+			}else{
+				set[key]=true;
+				return true;
+			}
+		});
+	})(points);
+
+	// Get all angles
+	var uniqueAngles = [];
+	for(var j=0;j<uniquePoints.length;j++){
+		var uniquePoint = uniquePoints[j];
+		var angle = Math.atan2(uniquePoint.y-Source.y,uniquePoint.x-Source.x);
+		uniquePoint.angle = angle;
+		uniqueAngles.push(angle-0.00001,angle,angle+0.00001);
+	}
+
+	// RAYS IN ALL DIRECTIONS
+	var intersects = [];
+	for(var j=0;j<uniqueAngles.length;j++){
+		var angle = uniqueAngles[j];
+
+		// Calculate dx & dy from angle
+		var dx = Math.cos(angle);
+		var dy = Math.sin(angle);
+
+		// Ray from Source
+		var ray = {
+			a:{x:Source.x,y:Source.y},
+			b:{x:Source.x+dx,y:Source.y+dy}
+		};
+
+		// Find CLOSEST intersection
+		var closestIntersect = null;
+		for(var i=0;i<segments.length;i++){
+			var intersect = getIntersection(ray,segments[i]);
+			if(!intersect) continue;
+			if(!closestIntersect || intersect.param<closestIntersect.param){
+				closestIntersect=intersect;
+			}
+		}
+
+		// Intersect angle
+		if(!closestIntersect) continue;
+		closestIntersect.angle = angle;
+
+		// Add to list of intersects
+		intersects.push(closestIntersect);
+
+	}
+
+	// Sort intersects by angle
+	return intersects.sort(function(a,b){
+		return a.angle-b.angle;
+	});
+}
+
+function getArea(Source) {
+	var area = 0;
+	var intersects = getIntersects(Source);
+	for(var i=0; i < intersects.length-1; i++)
+		area += areaOfTriangle(Source, intersects[i], intersects[i+1]);
+	return area;
+}
+
+function updateSource() {
+	var proto = [{x: 0, y: 0}];
+	if (Source.x+5 < canvas.width)
+		proto.push({x: 5, y: 0});
+	if (Source.y+5 < canvas.height)
+		proto.push({x: 0, y: 5});
+	if (Source.x > 5)
+		proto.push({x: -5, y: 0});
+	if (Source.y > 5)
+		proto.push({x: 0, y: -5});
+	areas = [];
+	for (var i = 0; i < proto.length; i++)
+		areas.push(getArea({x: Source.x+proto[i].x, y: Source.y+proto[i].y}));
+	var max = 0;
+	var maxi = 0;
+	for (var i = 1; i < proto.length; i++) {
+		var a = areas[i];
+		if(a > max) {
+			max = a;
+			maxi = i;
+		}
+	};
+	if (Math.random() < temperature) {
+		Source.move(proto[1+parseInt(Math.random()*(proto.length-1))]);
+		temperature /= ktemperature;
+	} else if(areas[0] < max)
+		Source.move(proto[maxi]);
+}
+
+///////////////////////////////////////////////////////
+
+// DRAWING
+var canvas = document.getElementById("canvas");
+var msg = document.getElementById("msg");
+var ctx = canvas.getContext("2d");
+
+function drawBackground(){
+	// Draw segments
+	ctx.strokeStyle = "#999";
+	for(var i=0;i<segments.length;i++){
+		var seg = segments[i];
+		ctx.beginPath();
+		ctx.moveTo(seg.a.x,seg.a.y);
+		ctx.lineTo(seg.b.x,seg.b.y);
+		ctx.stroke();
+	}
+}
+
+function draw(){
+	// Clear canvas
+	ctx.clearRect(0,0,canvas.width,canvas.height);
+	msg.innerHTML = "";
+
+	drawBackground();
+	intersects = getIntersects(Source);
+	// DRAW AS A GIANT POLYGON
+	ctx.fillStyle = "#efefee";
+	ctx.beginPath();
+	ctx.moveTo(intersects[0].x,intersects[0].y);
+	for(var i=1;i<intersects.length;i++){
+		var intersect = intersects[i];
+		ctx.lineTo(intersect.x,intersect.y);
+	}
+	ctx.fill();
+
+	// DRAW OBSERVER
+	ctx.fillStyle = "#0000cc";
+	ctx.beginPath();
+    ctx.arc(Source.x, Source.y, 4, 0, 2*Math.PI, false);
+	ctx.fill();
+
+	// Calculate and show area
+	msg.innerHTML += "Area: " + getArea(Source);
+	msg.innerHTML += "<br>Temp: " + temperature;
+}
+
+// LINE SEGMENTS
+var segments = [
+
+	// Border
+	{a:{x:0,y:0}, b:{x:640,y:0}},
+	{a:{x:640,y:0}, b:{x:640,y:360}},
+	{a:{x:640,y:360}, b:{x:0,y:360}},
+	{a:{x:0,y:360}, b:{x:0,y:0}},
+
+	// Polygon #1
+	{a:{x:100,y:150}, b:{x:120,y:50}},
+	{a:{x:120,y:50}, b:{x:200,y:80}},
+	{a:{x:200,y:80}, b:{x:140,y:210}},
+	{a:{x:140,y:210}, b:{x:100,y:150}},
+
+	// Polygon #2
+	{a:{x:100,y:200}, b:{x:120,y:250}},
+	{a:{x:120,y:250}, b:{x:60,y:300}},
+	{a:{x:60,y:300}, b:{x:100,y:200}},
+
+	// Polygon #3
+	{a:{x:200,y:260}, b:{x:220,y:150}},
+	{a:{x:220,y:150}, b:{x:300,y:200}},
+	{a:{x:300,y:200}, b:{x:350,y:320}},
+	{a:{x:350,y:320}, b:{x:200,y:260}},
+
+	// Polygon #4
+	{a:{x:340,y:60}, b:{x:360,y:40}},
+	{a:{x:360,y:40}, b:{x:370,y:70}},
+	{a:{x:370,y:70}, b:{x:340,y:60}},
+
+	// Polygon #5
+	{a:{x:450,y:190}, b:{x:560,y:170}},
+	{a:{x:560,y:170}, b:{x:540,y:270}},
+	{a:{x:540,y:270}, b:{x:430,y:290}},
+	{a:{x:430,y:290}, b:{x:450,y:190}},
+
+	// Polygon #6
+	{a:{x:400,y:95}, b:{x:580,y:50}},
+	{a:{x:580,y:50}, b:{x:480,y:150}},
+	{a:{x:480,y:150}, b:{x:400,y:95}}
+
+];
+
+// DRAW LOOP
+window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
+var updateCanvas = true;
+function drawLoop(){
+    requestAnimationFrame(drawLoop);
+    if(updateCanvas){
+    	draw();
+    	updateCanvas = false;
+    }
+}
+window.onload = function(){
+	drawLoop();
+};
+
+// SOURCE STARTING POINT
+var Source = {
+	x: 639,
+	y: 359,
+	move: function(dir) {
+		Source.x += dir.x;
+		Source.y += dir.y;
+	}
+};
+
+// MOUSE	
+var Mouse = {
+	x: canvas.width/2,
+	y: canvas.height/2
+};
+
+var temperature = 1;
+var ktemperature = 1.05;
+
+window.onmousedown = function(e) {
+	Source.x = e.clientX;
+	Source.y = e.clientY;
+	temperature = 1;
+}
+
+setInterval(function(){
+	updateSource();
+	updateCanvas = true;
+}, 10);
+</script>
+</body></html>
