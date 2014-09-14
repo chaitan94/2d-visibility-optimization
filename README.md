@@ -8,9 +8,9 @@ Project presentation is available at [https://chaitan94.github.io/2d-visibility-
 
 ### Demos
 
- * [Area Calculation](https://chaitan94.github.io/2d-visibility-optimization/demos/demo0.html)
- * [Steepest Ascent](https://chaitan94.github.io/2d-visibility-optimization/demos/demo1.html)
- * [Simulated Annealing](https://chaitan94.github.io/2d-visibility-optimization/demos/demo2.html)
+ * [Area Calculation](https://chaitan94.github.io/2d-visibility-optimization/presentation/demos/demo0.html)
+ * [Steepest Ascent](https://chaitan94.github.io/2d-visibility-optimization/presentation/demos/demo1.html)
+ * [Simulated Annealing](https://chaitan94.github.io/2d-visibility-optimization/presentation/demos/demo2.html)
 
 ### Team
 
