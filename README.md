@@ -16,6 +16,7 @@ Project presentation is available at [https://chaitan94.github.io/2d-visibility-
 
  * Krishna Chaitanya / [chaitan94](https://github.com/chaitan94)
  * Surya Teja / [surya5](https://github.com/surya5)
+ * Rajkumar Paseddula
 
 ### Inspiration & Resources
 
