@@ -1,0 +1,5 @@
+min \sum_{i \epsilon P} x_{c}
+
+\newline sub. to \bigcup x_{c} \cdot Vis(x_{c}) = P
+
+\newline x_{c} \epsilon \left\{ 0, 1 \right\} \forall c \epsilon P
