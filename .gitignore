@@ -1,0 +1,6 @@
+*.pyc
+*.fuse*
+*.tmp
+*.swp
+*.bak
+
