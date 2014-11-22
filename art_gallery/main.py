@@ -18,7 +18,7 @@ if __name__ == '__main__':
 	if len(argv) != 2:
 		usage()
 		exit(1)
-	p = read_polygon_from_file("polygons/%s" % argv[1])
+	p = read_polygon_from_file(argv[1])
 	n = p.size()
 	lights = p.artGallery()
 	m = len(lights)

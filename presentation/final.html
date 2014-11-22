@@ -72,13 +72,6 @@
 						<h4>With one source</h4>
 					</section>
 					<section>
-						<h2>Assumptions</h2>
-						<ol>
-							<li class="fragment roll-in">There is a single room, with no divisions or partitions in between.</li>
-							<li class="fragment roll-in">The room is assumed to be in the shape of a polygon of finite sides</li>
-						</ol>
-					</section>
-					<section>
 						<h4>2D Visibility</h4>
 						<h2>Area Calculation</h2>
 						<iframe src="demos/demo0.html" width="750" height="450"></iframe>
@@ -121,23 +114,64 @@
 
 				<section>
 					<h3>Mathematical Formulation</h3>
+					<h5>An Integer Programming Approach</h5>
 					<img style="border:none;height:200px;padding:20px;" src="img/formulation.png">
 				</section>
 
 				<section>
-					<h4>Chvátal's Theorem A.K.A.</h4>
-					<h2>Art Gallery Theorem</h2>
-					<table height="550">
-						<tr>
-							<td style="width:30%;">
-								<img src="img/chvatal.png" height="400"></img>
-								<p>Václav Chvátal</p>
-							</td>
-							<td style="width:60%;vertical-align: middle;">
-								 <blockquote>[n/3] guards are always sufficient and sometimes necessary to guard a simple polygon with n vertices.</blockquote>
-							</td>
-						</tr>
-					</table>
+					<section>
+						<h3>NP-HARDNESS</h3>
+						<h5>Reducing to Set Cover</h5>
+						<img style="border:none;padding:20px;" src="img/set1.png">
+					</section>
+					<section>
+						<h4>Draw lines every vetex to another,</h4>
+						<h4>Unless they go outside</h4>
+						<img style="border:none;padding:20px;" src="img/set2.png">
+					</section>
+					<section>
+						<h4>Parts Visible from Vertex A</h4>
+						<img style="border:none;padding:20px;" src="img/set3.png">
+					</section>
+					<section>
+						<h4>Parts Visible from Vertex B</h4>
+						<img style="border:none;padding:20px;" src="img/set4.png">
+					</section>
+					<section>
+						<h4>Parts Visible from Vertex C</h4>
+						<img style="border:none;padding:20px;" src="img/set5.png">
+					</section>
+					<section>
+						<h5>This is exactly</h5>
+						<h4>Set Cover</h4>
+						<h5>Hence, Art Gallery Problem is NP-Hard</h5>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Chvátal's Theorem A.K.A.</h4>
+						<h2>Art Gallery Theorem</h2>
+						<table height="550">
+							<tr>
+								<td style="width:30%;">
+									<img src="img/chvatal.png" height="400"></img>
+									<p>Václav Chvátal</p>
+								</td>
+								<td style="width:60%;vertical-align: middle;">
+									 <blockquote>[n/3] guards are always sufficient and sometimes necessary to guard a simple polygon with n vertices.</blockquote>
+								</td>
+							</tr>
+						</table>
+					</section>
+					<section>
+						<h2>Assumptions</h2>
+						<ol>
+							<li class="fragment roll-in">Art Gallery is considered as a simple polygon.</li>
+							<li class="fragment roll-in">There is a single room, with no divisions or partitions in between.</li>
+							<li class="fragment roll-in">The room is assumed to have finite sides</li>
+						</ol>
+					</section>
 				</section>
 				
 				<section>
@@ -166,6 +200,24 @@
 					<section>
 						<h4>Recognize Minimum Occuring Color</h4>
 						<img src="img/example4.png">
+					</section>
+					<section>
+						<h4>References</h4>
+						<small>
+						<ul>
+							<li><a href="http://www.math.iit.edu/~kaul/talks/LongArtGalleryTalk.pdf">http://www.math.iit.edu/~kaul/talks/LongArtGalleryTalk.pdf</a></li>
+							<li><a href="http://www.tcs.tifr.res.in/~ghosh/lec-psgtech-sept11.pdf">http://www.tcs.tifr.res.in/~ghosh/lec-psgtech-sept11.pdf</a></li>
+							<li><a href="http://www.cimec.org.ar/twiki/pub/Cimec/GeometriaComputacional/DeBerg_-_Computational_Geometry_-_Algorithms_and_Applications_2e.pdf">http://www.cimec.org.ar/twiki/pub/Cimec/GeometriaComputacional/DeBerg_-_Computational_Geometry_-_Algorithms_and_Applications_2e.pdf</a></li>
+							<li><a href="en.wikipedia.org/wiki/Art_gallery_problem">en.wikipedia.org/wiki/Art_gallery_problem</a></li>
+							<li><a href="#">Point Guards and Point Clouds - Solving General Art Gallery Problems by Jacobs University</a></li>
+							<li><a href="http://www.cse.iitd.ernet.in/~ssen/geomschool/nandy/Art-gallery-approximation.pdf">http://www.cse.iitd.ernet.in/~ssen/geomschool/nandy/Art-gallery-approximation.pdf</a></li>
+							<li><a href="http://www.wseas.us/e-library/transactions/information/2008/28-593.pdf">http://www.wseas.us/e-library/transactions/information/2008/28-593.pdf</a></li>
+							<li><a href="http://oa.upm.es/4599/1/INVE_MEM_2008_61596.pdf">http://oa.upm.es/4599/1/INVE_MEM_2008_61596.pdf</a></li>
+							<li><a href="http://cs.smith.edu/~orourke/Papers/GenRandPoly.pdf">http://cs.smith.edu/~orourke/Papers/GenRandPoly.pdf</a></li>
+							<li><a href="http://scholarly-journals.com/sjmcs/archive/2013/June/pdf/Nami%20and%20Mohades.pdf">http://scholarly-journals.com/sjmcs/archive/2013/June/pdf/Nami%20and%20Mohades.pdf</a></li>
+							<li><a href="http://www.optimization-online.org/DB_FILE/2013/11/4106.pdf">http://www.optimization-online.org/DB_FILE/2013/11/4106.pdf</a></li>
+						</ul>
+						</small>
 					</section>
 				</section>
 
