@@ -22,8 +22,15 @@
 var canvas = document.getElementById("canvas");
 var msg = document.getElementById("msg");
 var ctx = canvas.getContext("2d");
-function draw(){
 
+function drawPoint(x, y) {
+	ctx.fillStyle = "#0000cc";
+	ctx.beginPath();
+	ctx.arc(x, y, 4, 0, 2*Math.PI, false);
+	ctx.fill();
+}
+
+function draw(){
 	// Clear canvas
 	ctx.clearRect(0,0,canvas.width,canvas.height);
 
@@ -115,6 +122,12 @@ function draw(){
 		ctx.lineTo(intersect.x,intersect.y);
 	}
 	ctx.fill();
+
+	drawPoint(Mouse.x, Mouse.y);
+	for(var i=1;i<intersects.length;i++){
+		var intersect = intersects[i];
+		drawPoint(intersect.x, intersect.y);
+	}
 
 	// Calculate and show area
 	var area = 0;
