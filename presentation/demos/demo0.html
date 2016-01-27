@@ -3,12 +3,12 @@
 <head>
 	<style>
 	body{
-		margin:0;
+		margin: 0;
 		background: #eee;
 	}
 	#canvas{
-		width:640px;
-		height:360px;
+		width: 640px;
+		height: 360px;
 		background: #222;
 	}
 	</style>
@@ -184,11 +184,11 @@ var segments = [
 window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame;
 var updateCanvas = true;
 function drawLoop(){
-    requestAnimationFrame(drawLoop);
-    if(updateCanvas){
-    	draw();
-    	updateCanvas = false;
-    }
+	requestAnimationFrame(drawLoop);
+	if(updateCanvas){
+		draw();
+		updateCanvas = false;
+	}
 }
 window.onload = function(){
 	drawLoop();
