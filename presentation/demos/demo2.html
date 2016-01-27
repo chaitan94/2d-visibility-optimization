@@ -93,8 +93,8 @@ function getIntersects(Source) {
 function getArea(Source) {
 	var area = 0;
 	var intersects = getIntersects(Source);
-	for(var i=0; i < intersects.length-1; i++)
-		area += areaOfTriangle(Source, intersects[i], intersects[i+1]);
+	for(var i=0; i < intersects.length; i++)
+		area += areaOfTriangle(Source, intersects[i], intersects[(i+1)%intersects.length]);
 	return area;
 }
 

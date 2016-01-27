@@ -118,8 +118,8 @@ function draw(){
 
 	// Calculate and show area
 	var area = 0;
-	for(var i=0;i<intersects.length-1;i++)
-		area += areaOfTriangle(Mouse, intersects[i], intersects[i+1]);
+	for(var i=0;i<intersects.length;i++)
+		area += areaOfTriangle(Mouse, intersects[i], intersects[(i+1)%intersects.length]);
 	msg.innerHTML = "Area: " + area;
 }
 
